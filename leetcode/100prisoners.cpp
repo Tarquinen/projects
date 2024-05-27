@@ -85,13 +85,6 @@ int main()
    int successfulSimulations { 0 };
    int simulations { 100000 };
    auto start = chrono::high_resolution_clock::now();
-   // for (int i = 0; i < simulations; i++)
-   // {
-   //    if (noStrategy() >= 65 )
-   //    {
-   //       successfulSimulations++;
-   //    }
-   // }
    auto end = chrono::high_resolution_clock::now();
    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start).count();
 
