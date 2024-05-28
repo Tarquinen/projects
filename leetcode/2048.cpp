@@ -56,6 +56,15 @@ class board {
          return count;
       }
 
+      bool surroundingCellsMatch(int row, int col) {
+         int currentCell = boardGrid[row][col];
+         if (row > 0 && boardGrid[row-1][col] == currentCell) return true;
+         if (row < 3 && boardGrid[row+1][col] == currentCell) return true;
+         if (col > 0 && boardGrid[row][col-1] == currentCell) return true;
+         if (col < 3 && boardGrid[row][col+1] == currentCell) return true;
+         return false;
+      }
+
    public:
       board() {
          for (int i = 0; i < 4; i ++) {
@@ -63,23 +72,8 @@ class board {
                boardGrid[i][j] = 0;
             }
          }
-         // generaterandomcell();
-         // generaterandomcell();
-         setCellValue(0, 0, 2);
-         setCellValue(0, 1, 2);
-
-         setCellValue(1, 1, 2);
-         setCellValue(1, 2, 2);
-
-         setCellValue(2, 0, 2);
-         setCellValue(2, 1, 2);
-         setCellValue(2, 2, 2);
-         setCellValue(2, 3, 2);
-
-         
-         setCellValue(3, 0, 2);
-         setCellValue(3, 1, 2);
-         setCellValue(3, 2, 4);
+         generateRandomCell();
+         generateRandomCell();
       }
 
       friend ostream& operator<<(ostream& os, const board& b) {
@@ -87,11 +81,18 @@ class board {
          return os;
       }
 
+      void setCellValue(int row, int col, int value) {
+         boardGrid[row][col] = value;
+      }
+
+      int getCellValue(int row, int col) {
+         return boardGrid[row][col];
+      }
+
       bool generateRandomCell() {
          int possiblePositions = countBlankCells();
          if (possiblePositions == 0) return false;
          int newCell = generateRandomNumber(possiblePositions);
-         // cout << "new cell at: " << newCell << endl;
          int currCell = 0;
          for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -111,14 +112,16 @@ class board {
          return true;
       }
 
-      void pushLeft() {
+      bool pushLeft() {
          bool modified[4][4] { false };
+         bool gridMoved { false };
          for (int i = 0; i < 4; i++) {
             // move cells over
             for (int j = 1; j < 4; j++) {
                int currentCell = boardGrid[i][j];
                if (currentCell != 0) {
                   if (boardGrid[i][j-1] == 0) {
+                     gridMoved = true;
                      boardGrid[i][j] = 0;
                      boardGrid[i][j-1] = currentCell;
                      if (modified[i][j]) {
@@ -136,6 +139,7 @@ class board {
                int currentCell = boardGrid[i][j];
                if (currentCell != 0) {
                   if (boardGrid[i][j-1] == currentCell && !modified[i][j] && !modified[i][j-1]) {
+                     gridMoved = true;
                      boardGrid[i][j-1] = currentCell * 2;
                      boardGrid[i][j] = 0;
                      modified[i][j-1] = true;
@@ -146,16 +150,20 @@ class board {
                }
             }
          }
+
+         return gridMoved;
       }
 
-      void pushRight() {
+      bool pushRight() {
          bool modified[4][4] { false };
+         bool gridMoved { false };
          for (int i = 0; i < 4; i++) {
             // move cells over
             for (int j = 2; j >= 0; j--) {
                int currentCell = boardGrid[i][j];
                if (currentCell != 0) {
                   if (boardGrid[i][j+1] == 0) {
+                     gridMoved = true;
                      boardGrid[i][j] = 0;
                      boardGrid[i][j+1] = currentCell;
                      if (modified[i][j]) {
@@ -173,6 +181,7 @@ class board {
                int currentCell = boardGrid[i][j];
                if (currentCell != 0) {
                   if (boardGrid[i][j+1] == currentCell && !modified[i][j] && !modified[i][j+1]) {
+                     gridMoved = true;
                      boardGrid[i][j+1] = currentCell * 2;
                      boardGrid[i][j] = 0;
                      modified[i][j+1] = true;
@@ -183,16 +192,20 @@ class board {
                }
             }
          }
+
+         return gridMoved;
       }
 
-      void pushUp() {
+      bool pushUp() {
          bool modified[4][4] { false };
+         bool gridMoved { false };
          for (int j = 0; j < 4; j++) {
             // move cells over
             for (int i = 1; i < 4; i++) {
                int currentCell = boardGrid[i][j];
                if (currentCell != 0) {
                   if (boardGrid[i-1][j] == 0) {
+                     gridMoved = true;
                      boardGrid[i][j] = 0;
                      boardGrid[i-1][j] = currentCell;
                      if (modified[i][j]) {
@@ -210,6 +223,7 @@ class board {
                int currentCell = boardGrid[i][j];
                if (currentCell != 0) {
                   if (boardGrid[i-1][j] == currentCell && !modified[i][j] && !modified[i-1][j]) {
+                     gridMoved = true;
                      boardGrid[i-1][j] = currentCell * 2;
                      boardGrid[i][j] = 0;
                      modified[i-1][j] = true;
@@ -220,16 +234,19 @@ class board {
                }
             }
          }
+         return gridMoved;
       }
 
-      void pushDown() {
+      bool pushDown() {
          bool modified[4][4] { false };
+         bool gridMoved { false };
          for (int j = 0; j < 4; j++) {
             // move cells over
             for (int i = 2; i >= 0; i--) {
                int currentCell = boardGrid[i][j];
                if (currentCell != 0) {
                   if (boardGrid[i+1][j] == 0) {
+                     gridMoved = true;
                      boardGrid[i][j] = 0;
                      boardGrid[i+1][j] = currentCell;
                      if (modified[i][j]) {
@@ -247,6 +264,7 @@ class board {
                int currentCell = boardGrid[i][j];
                if (currentCell != 0) {
                   if (boardGrid[i+1][j] == currentCell && !modified[i][j] && !modified[i+1][j]) {
+                     gridMoved = true;
                      boardGrid[i+1][j] = currentCell * 2;
                      boardGrid[i][j] = 0;
                      modified[i+1][j] = true;
@@ -257,47 +275,76 @@ class board {
                }
             }
          }
+         return gridMoved;
       }
 
-      void setCellValue(int row, int col, int value) {
-         boardGrid[row][col] = value;
+      bool checkWin(int winNumber) {
+         for (int i = 0; i < 4; i++ ) {
+            for (int j = 0; j < 4; j++) {
+               if (boardGrid[i][j] == winNumber) {
+                  return true;
+               }
+            }
+         }
+         return false;
       }
 
-      int getCellValue(int row, int col) {
-         return boardGrid[row][col];
+      bool checkLoss() {
+         if (countBlankCells() == 0) {
+            for (int i = 0; i < 4; i++) {
+               for (int j = 0; j < 4; j++) {
+                  if (surroundingCellsMatch(i, j)) {
+                     return false;
+                  }
+               }
+            }
+            return true;
+         }
+         return false;
       }
 };
 
 void clearScreen() {
-   cout << "\033[2J\033[1;1H";
+   cout << "\033[2J\033[1;1H"; // lol wtf why does this clear screen
 }
 
 int main() {
    clearScreen();
    board b;
    cout << b << endl;
-   // std::this_thread::sleep_for(std::chrono::seconds(1));
    
    while (true) {
+      if (b.checkLoss()) {
+         cout << "you've lost" << endl;
+         break;
+      }
+      if (b.checkWin(2048)) {
+         cout << "you've won" << endl;
+         break;
+      }
       string move;
       cin >> move;
       if (move == "w") {
-         clearScreen();
-         b.pushUp();
+         if (b.pushUp()) {
+            b.generateRandomCell();
+         }
       }
       else if (move == "s") {
-         clearScreen();
-         b.pushDown();
+         if (b.pushDown()) {
+            b.generateRandomCell();
+         }
       }
       else if (move == "d") {
-         clearScreen();
-         b.pushRight();
+         if (b.pushRight()) {
+            b.generateRandomCell();
+         }
       }
       else if (move == "a") {
-         clearScreen();
-         b.pushLeft();
+         if (b.pushLeft()) {
+            b.generateRandomCell();
+         }
       }
-      b.generateRandomCell();
+      clearScreen();
       cout << b << endl;
    }
 }
