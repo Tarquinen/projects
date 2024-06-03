@@ -318,12 +318,14 @@ int main() {
          cout << "you've lost" << endl;
          break;
       }
-      if (b.checkWin(2048)) {
+      if (b.checkWin(2048)) { 
          cout << "you've won" << endl;
          break;
       }
+
       string move;
       cin >> move;
+      
       if (move == "w") {
          if (b.pushUp()) {
             b.generateRandomCell();

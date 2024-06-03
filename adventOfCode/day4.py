@@ -16,7 +16,7 @@ def part1(inputLine):
     
     print(f"The total points are {totalPoints}")
 
-    
+
 def part2(inputLine):
     cardDict = defaultdict(int)
     for i in range(len(inputLine)):
