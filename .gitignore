@@ -1,2 +1,4 @@
 .vscode/
 test_files/
+python-stockfish/
+alpha-nonzero/
