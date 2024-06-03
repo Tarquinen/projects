@@ -7,14 +7,14 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class day9 {
-    public static void main (String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         BufferedReader file = new BufferedReader(new FileReader(
-            "C:\\Users\\danny\\OneDrive\\Desktop\\Algo\\School-repo\\adventOfCode\\day9.txt"));
+                "C:\\Users\\danny\\OneDrive\\Desktop\\Algo\\School-repo\\adventOfCode\\day9.txt"));
         part1(file);
-        //part2(file);
+        // part2(file);
     }
-    
-    public static void part1 (BufferedReader f) throws Exception {
+
+    public static void part1(BufferedReader f) throws Exception {
         ArrayList<String> fList = new ArrayList<String>();
         String line;
         while ((line = f.readLine()) != null)
@@ -30,8 +30,8 @@ public class day9 {
                 if (Character.isDigit(s.charAt(j))) {
                     coord[1] = j;
                 }
-                if (s.charAt(j) == ' ') { //when reaching a space
-                    in.add(Integer.parseInt(s.substring(coord[0], coord[1] + 1))); //add number to list
+                if (s.charAt(j) == ' ') { // when reaching a space
+                    in.add(Integer.parseInt(s.substring(coord[0], coord[1] + 1))); // add number to list
                     coord[0] = j + 1;
                     numCounter++;
                 }
@@ -46,10 +46,10 @@ public class day9 {
             while (!zeros) {
                 int zeroCounter = 0;
                 in.clear();
-                for (int k = 0; k < numCounter - 1; k ++) { // populate next array down
+                for (int k = 0; k < numCounter - 1; k++) { // populate next array down
                     in.add(bigList.get(bigList.size() - 1).get(k + 1) - bigList.get(bigList.size() - 1).get(k));
                     if (in.get(k) == 0) {
-                        zeroCounter ++;
+                        zeroCounter++;
                     }
                 }
                 if (zeroCounter == numCounter - 1) {
@@ -69,8 +69,8 @@ public class day9 {
         }
         System.out.println("total sum: " + totalSum);
     }
-    
-    public static void part2 (BufferedReader f) throws Exception {
+
+    public static void part2(BufferedReader f) throws Exception {
         ArrayList<String> fList = new ArrayList<String>();
         String line;
         while ((line = f.readLine()) != null)
@@ -86,8 +86,8 @@ public class day9 {
                 if (Character.isDigit(s.charAt(j))) {
                     coord[1] = j;
                 }
-                if (s.charAt(j) == ' ') { //when reaching a space
-                    in.add(Integer.parseInt(s.substring(coord[0], coord[1] + 1))); //add number to list
+                if (s.charAt(j) == ' ') { // when reaching a space
+                    in.add(Integer.parseInt(s.substring(coord[0], coord[1] + 1))); // add number to list
                     coord[0] = j + 1;
                     numCounter++;
                 }
@@ -102,10 +102,10 @@ public class day9 {
             while (!zeros) {
                 int zeroCounter = 0;
                 in.clear();
-                for (int k = 0; k < numCounter - 1; k ++) { // populate next array down
+                for (int k = 0; k < numCounter - 1; k++) { // populate next array down
                     in.add(bigList.get(bigList.size() - 1).get(k + 1) - bigList.get(bigList.size() - 1).get(k));
                     if (in.get(k) == 0) {
-                        zeroCounter ++;
+                        zeroCounter++;
                     }
                 }
                 if (zeroCounter == numCounter - 1) {

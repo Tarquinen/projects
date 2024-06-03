@@ -14,10 +14,10 @@ int main()
          doors[j] = !doors[j];
       }
    }
-
+    
    for (int i = 0; i < 100; i++)
    {
-      if (doors[i] == true)
+      if (doors[i])
       {
          cout << "door " << i << " is open" << endl;
       }
