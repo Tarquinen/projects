@@ -2,3 +2,6 @@
 test_files/
 python-stockfish/
 alpha-nonzero/
+venv/
+build/
+.gitingore
