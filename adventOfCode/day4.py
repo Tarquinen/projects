@@ -1,4 +1,5 @@
 from collections import defaultdict
+from os import initgroups
 
 def part1(inputLine):
     totalPoints = 0;
